@@ -6,21 +6,21 @@
  * @counter: Line number (not used).
  * Return: No return value.
  */
-void f_pall(stack_t **head, unsigned int counter)
-{
-    stack_t *current;
+	void f_pall(stack_t **head, unsigned int counter)
+	{
+	stack_t *current;
 
-    (void)counter;
+	(void)counter;
 
-    if (*head == NULL)
-        return;
+	if (*head == NULL)
+	return;
 
-    current = *head;
+	current = *head;
 
-    while (current)
-    {
-        printf("%d\n", current->n);
-        current = current->next;
-    }
-}
+	while (current)
+	{
+	printf("%d\n", current->n);
+	current = current->next;
+	}
+	}
 
