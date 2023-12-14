@@ -8,7 +8,7 @@
  * @monty_file: pointer to the monty file
  * Return: no return
  */
-int execute_opcode(char *line_content, stack_t **stack_head, unsigned int line_counter, FILE *monty_file)
+int execute_opcode(char *line_content, stack_t **stack, unsigned int line_counter, FILE *monty_file)
 {
     instruction_t opcodes[] = {
         {"push", push_node}, {"pall",  print_stack}
@@ -27,7 +27,7 @@ int execute_opcode(char *line_content, stack_t **stack_head, unsigned int line_c
     {
         if (strcmp(opcode, opcodes[i].opcode) == 0)
         {
-            opcodes[i].f(stack_head, line_counter);
+            opcodes[i].f(stack, line_counter);
             return 0;
         }
         i++;
@@ -38,7 +38,8 @@ int execute_opcode(char *line_content, stack_t **stack_head, unsigned int line_c
         fprintf(stderr, "L%d: unknown instruction %s\n", line_counter, opcode);
         fclose(monty_file);
         free(line_content);
-	free_stack_nodes(*stack_t);
+	free_stack_nodes(*stack);
+
         exit(EXIT_FAILURE);
     }
 

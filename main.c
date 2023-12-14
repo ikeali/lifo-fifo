@@ -2,20 +2,13 @@
 
 bus_t bus = {NULL, NULL, NULL, 0};
 
-/**
- * main - Monty code interpreter
- * @argc: number of arguments
- * @argv: Monty file location
- * Return: 0 on success
- */
 int main(int argc, char *argv[])
 {
-    char *current_line;
+    char *current_line = NULL;
     FILE *monty_file;
     size_t line_size = 0;
-    ssize_t read_line = 1;
     stack_t *stack_head = NULL;
-    unsigned int line_counter = 0;
+    unsigned int line_counter = 1;
 
     if (argc != 2)
     {
@@ -32,17 +25,23 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    while (read_line > 0)
+    while (1)
     {
-        current_line = NULL;
-        read_line = getline(&current_line, &line_size, monty_file);
-        bus.content = current_line;
-        line_counter++;
-
-        if (read_line > 0)
+        current_line = malloc(line_size);
+        if (current_line == NULL)
         {
-            execute_opcode(current_line, &stack_head, line_counter, monty_file);
+            fprintf(stderr, "Error: Memory allocation failed\n");
+            exit(EXIT_FAILURE);
         }
+
+        if (fgets(current_line, line_size, monty_file) == NULL)
+        {
+            free(current_line);
+            break;
+        }
+
+        execute_opcode(current_line, &stack_head, line_counter, monty_file);
+        line_counter++;
 
         free(current_line);
     }
@@ -50,6 +49,6 @@ int main(int argc, char *argv[])
     free_stack_nodes(stack_head);
     fclose(monty_file);
 
-    return (0);
+    return 0;
 }
 

@@ -24,7 +24,7 @@ void push_node(stack_t **stack, unsigned int line_number)
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			fclose(bus.file);
 			free(bus.content);
-			free_stack(*stack);
+			free_stack_nodes(*stack);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -33,7 +33,7 @@ void push_node(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		fclose(bus.file);
 		free(bus.content);
-		free_stack(*stack);
+		free_stack_nodes(*stack);
 		exit(EXIT_FAILURE);
 	}
 
